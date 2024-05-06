@@ -1,0 +1,29 @@
+.column {
+  margin: 0 20px;
+  padding: 20px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  flex-grow: 1;
+  width: 30%;
+  min-height: 600px;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  margin: 5px 0;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #e0e0e0;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #d3d3d3;
+}
