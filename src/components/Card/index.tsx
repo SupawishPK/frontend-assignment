@@ -6,7 +6,7 @@ type IItem = {
 };
 
 interface IProps {
-  title: string;
+  title?: string;
   items: IItem[];
   onClick: (item: IItem) => void;
 }
@@ -14,7 +14,7 @@ interface IProps {
 const Card = ({ title, items, onClick }: IProps) => {
   return (
     <div className="column">
-      <h3>{title}</h3>
+      {title && <h3>{title}</h3>}
       <div className="button-container">
         {items.map((item) => (
           <button className="button" onClick={() => onClick(item)}>

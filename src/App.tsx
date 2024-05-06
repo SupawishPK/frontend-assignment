@@ -91,7 +91,6 @@ const App = () => {
   return (
     <div className="container">
       <Card
-        title="Fruits & Vegetables"
         items={mains}
         onClick={moveItemToCategories}
       />
