@@ -61,7 +61,7 @@ const App = () => {
   const [fruits, setFruits] = useState<IItems[]>([]);
   const [vegetables, setVegetables] = useState<IItems[]>([]);
   const [timeoutIds, setTimeoutIds] = useState<
-    { timeoutId: NodeJS.Timeout; name: string }[]
+    { timeoutId: string; name: string }[]
   >([]);
 
   const removeFromList = (list: IItems[], itemName: string) =>
@@ -96,7 +96,10 @@ const App = () => {
       categorySetter((prevList) => removeFromList(prevList, item.name));
     }, 5000);
 
-    setTimeoutIds((prevList) => [...prevList, { timeoutId, name: item.name }]);
+    setTimeoutIds((prevList) => [
+      ...prevList,
+      { timeoutId: timeoutId.toString(), name: item.name },
+    ]);
 
     setMains((prevList) => prevList.filter((i) => i.name !== item.name));
   };
