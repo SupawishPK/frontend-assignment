@@ -60,11 +60,22 @@ const App = () => {
   const [mains, setMains] = useState<IItems[]>(items);
   const [fruits, setFruits] = useState<IItems[]>([]);
   const [vegetables, setVegetables] = useState<IItems[]>([]);
+  const [timeoutIds, setTimeoutIds] = useState<
+    { timeoutId: NodeJS.Timeout; name: string }[]
+  >([]);
 
   const removeFromList = (list: IItems[], itemName: string) =>
     list.filter((i: IItems) => i.name !== itemName);
 
   const moveItemToMains = (item: IItems) => {
+    const timeoutId = timeoutIds.find((i) => i.name === item.name)?.timeoutId;
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+      setTimeoutIds((prevList) =>
+        prevList.filter((i) => i.timeoutId !== timeoutId)
+      );
+    }
+
     const isItemFruit = isFruit(item);
     const categorySetter = isItemFruit ? setFruits : setVegetables;
     const categoryList = isItemFruit ? fruits : vegetables;
@@ -80,20 +91,19 @@ const App = () => {
 
     categorySetter((prevList) => [...prevList, item]);
 
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       setMains((prevList) => [...prevList, item]);
       categorySetter((prevList) => removeFromList(prevList, item.name));
     }, 5000);
+
+    setTimeoutIds((prevList) => [...prevList, { timeoutId, name: item.name }]);
 
     setMains((prevList) => prevList.filter((i) => i.name !== item.name));
   };
 
   return (
     <div className="container">
-      <Card
-        items={mains}
-        onClick={moveItemToCategories}
-      />
+      <Card items={mains} onClick={moveItemToCategories} />
       <Card title="Fruits" items={fruits} onClick={moveItemToMains} />
       <Card title="Vegetables" items={vegetables} onClick={moveItemToMains} />
     </div>
