@@ -61,7 +61,7 @@ const App = () => {
   const [fruits, setFruits] = useState<IItems[]>([]);
   const [vegetables, setVegetables] = useState<IItems[]>([]);
   const [timeoutIds, setTimeoutIds] = useState<
-    { timeoutId: string; name: string }[]
+    { timeoutId: number; name: string }[]
   >([]);
 
   const removeFromList = (list: IItems[], itemName: string) =>
@@ -98,7 +98,7 @@ const App = () => {
 
     setTimeoutIds((prevList) => [
       ...prevList,
-      { timeoutId: timeoutId.toString(), name: item.name },
+      { timeoutId: Number(timeoutId), name: item.name },
     ]);
 
     setMains((prevList) => prevList.filter((i) => i.name !== item.name));
