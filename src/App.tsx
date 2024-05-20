@@ -86,6 +86,16 @@ const App = () => {
     setMains((prevList: IItems[]) => [...prevList, item]);
   };
 
+  const clearExistingTimeout = (itemName: string) => {
+    const existingTimeout = timeoutIds.find((i) => i.name === itemName);
+    if (existingTimeout) {
+      clearTimeout(existingTimeout.timeoutId);
+      setTimeoutIds((prevList) =>
+        prevList.filter((i) => i.timeoutId !== existingTimeout.timeoutId)
+      );
+    }
+  };
+
   const moveItemToCategories = (item: IItems) => {
     const categorySetter = isFruit(item) ? setFruits : setVegetables;
 
@@ -96,14 +106,7 @@ const App = () => {
       categorySetter((prevList) => removeFromList(prevList, item.name));
     }, 5000);
 
-    const findTimeoutId = timeoutIds.find((i) => i.name === item.name);
-    if (findTimeoutId) {
-      clearTimeout(findTimeoutId.timeoutId);
-      const mutatedTimeoutIds = timeoutIds.filter(
-        (i) => i.timeoutId !== findTimeoutId.timeoutId
-      );
-      setTimeoutIds(mutatedTimeoutIds);
-    }
+    clearExistingTimeout(item.name);
 
     setTimeoutIds((prevList) => [
       ...prevList,
