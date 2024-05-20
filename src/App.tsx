@@ -96,6 +96,15 @@ const App = () => {
       categorySetter((prevList) => removeFromList(prevList, item.name));
     }, 5000);
 
+    const findTimeoutId = timeoutIds.find((i) => i.name === item.name);
+    if (findTimeoutId) {
+      clearTimeout(findTimeoutId.timeoutId);
+      const mutatedTimeoutIds = timeoutIds.filter(
+        (i) => i.timeoutId !== findTimeoutId.timeoutId
+      );
+      setTimeoutIds(mutatedTimeoutIds);
+    }
+
     setTimeoutIds((prevList) => [
       ...prevList,
       { timeoutId: Number(timeoutId), name: item.name },
