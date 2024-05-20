@@ -17,7 +17,11 @@ const Card = ({ title, items, onClick }: IProps) => {
       {title && <h3>{title}</h3>}
       <div className="button-container">
         {items.map((item) => (
-          <button className="button" onClick={() => onClick(item)}>
+          <button
+            key={item.name}
+            className="button"
+            onClick={() => onClick(item)}
+          >
             {item.name}
           </button>
         ))}
